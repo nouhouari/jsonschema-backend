@@ -2,17 +2,19 @@ package com.hin.jsonschema.model;
 
 
 import java.util.Date;
+import java.util.UUID;
+
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 import org.hibernate.annotations.ColumnTransformer;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+
 import lombok.Data;
 
 @Entity
@@ -20,14 +22,14 @@ import lombok.Data;
 @EntityListeners(AuditingEntityListener.class)
 public class Registration {
     
-    @GeneratedValue(strategy=GenerationType.UUID)
+    @GeneratedValue(generator = "UUID")
     @Id
-    private String id;
+    private UUID id;
 
     @CreatedDate
     private Date createdOn;
 
-    @Column(columnDefinition = "jsonb")
+    @javax.persistence.Column(columnDefinition = "jsonb")
     @ColumnTransformer(write = "?::jsonb")
     private String registrationData;
     
